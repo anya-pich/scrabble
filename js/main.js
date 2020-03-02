@@ -36,6 +36,8 @@
 // After the game is over see an alphabetical list of all words played with their definitions
 // After the game is over see a short list of unusual or long words that could have been played or maybe a 'hint' button while you're playing
 
+// make scrabble tiles
+
 class Tile {
 	constructor(letter, points) {
  		this.letter = letter;
@@ -87,6 +89,14 @@ for (each of tileQuants) {
 
 console.log(scrabbleTiles);
 
+// shuffle tiles
+let shuffled = [];
+while (scrabbleTiles.length > 0) {
+ let i = Math.floor(scrabbleTiles.length * Math.random());
+ shuffled.push(scrabbleTiles[i]);
+ scrabbleTiles.splice(i, 1);
+}
+console.log(shuffled);
 
 
 
