@@ -117,14 +117,40 @@ let player = new Hand();
 player.getTiles();
 console.log(player);
 
-
-
 let computer = new Hand();
 computer.getTiles();
 console.log(computer);
 
+//////////
 
 
+// draggable tiles
+
+function onDragStart(event) {
+	event
+		.dataTransfer
+		.setData('text/plain', event.target.id);
+	event
+		.currentTarget
+		.style
+		.backgroundColor = 'yellow';
+}
+
+function onDragOver(event) {
+	event.preventDefault();
+}
+
+function onDrop(event) {
+	const id = event
+		.dataTransfer
+		.getData('text');
+	const draggableElement = document.getElementById(id);
+	const dropzone = event.targe;
+	dropzone.appendChild(draggableElement);
+	event
+		.dataTransfer
+		.clearData();
+}
 
 
 
