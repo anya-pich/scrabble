@@ -36,7 +36,7 @@
 // After the game is over see an alphabetical list of all words played with their definitions
 // After the game is over see a short list of unusual or long words that could have been played or maybe a 'hint' button while you're playing
 
-// make scrabble tiles
+// classes
 
 class Tile {
 	constructor(letter, points) {
@@ -44,6 +44,19 @@ class Tile {
  		this.points = points;
 	}
 }
+
+class Hand {
+	constructor() {
+		this.hand = [];
+	}
+	getTiles() {
+		while (this.hand.length < 7) {
+			this.hand.push(shuffled.shift());
+		};
+	}
+}
+
+// make scrabble tiles
 
 const scrabbleTiles = [];
 
@@ -98,8 +111,17 @@ while (scrabbleTiles.length > 0) {
 }
 console.log(shuffled);
 
+// deal 7 tiles to each player
+
+let player = new Hand();
+player.getTiles();
+console.log(player);
 
 
+
+let computer = new Hand();
+computer.getTiles();
+console.log(computer);
 
 
 
