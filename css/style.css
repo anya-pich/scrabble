@@ -1,5 +1,4 @@
 html, body {
-/*  height: 100vh;*/
   margin: 0;
 }
 
@@ -23,13 +22,13 @@ h1 {
 td {
   height: 50px;
   width: 50px;
-/*  border: 2px solid Gainsboro;*/
   box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.15) inset;
   text-align: center;
   color: white;
   font-size: 16px;
   letter-spacing: 1px;
   font-weight: 600;
+  background-color: ghostwhite;
 }
 
 button {
@@ -68,6 +67,13 @@ button:hover {
 
 #player-tiles {
   margin: 50px auto;
+  height: 56px;
+  width: 468px;
+  display: flex;
+  background: ghostwhite;
+  justify-content: flex-start;
+  float: left;
+  border-radius: 5px;
 }
 
 .tile {
@@ -78,22 +84,39 @@ button:hover {
   box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,0.05);
   font-size: 25px;
-  text-align: center;
   text-transform: uppercase;
   font-weight: 200;
   color: SlateGray;
   float: left;
   margin: 4px;
-  padding: 13px;
+  display: grid;
+  grid-template-rows: 12px 22px auto;
+  grid-template-columns: 12px auto 12px;
+  grid-gap: 0px;
+  padding: 0;
+}
+
+.tile p {
+  grid-area: 2 / 2 / 3 / 3;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: 22px;
 }
 
 .tile sub {
-  font-size: 12px;
-  margin: 1px auto;
+  font-size: 10px;
+  letter-spacing: -1px;
+  grid-area: 3 / 3 / 4 / 4;
+  padding-left: -1px;
 }
 
 td .tile {
   margin: 0;
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.2);
 }
 
+.tdfull {
+  background-color: ghostwhite;
+}
 

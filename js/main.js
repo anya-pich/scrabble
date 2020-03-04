@@ -136,18 +136,22 @@ function onDragOver(event) {
 
 function onDrop(event) {
 	event.preventDefault();
-	event.currentTarget.style.margin = '0px;';
 	const id = event.dataTransfer.getData('text');
 	const draggableElement = document.getElementById(id);
 	const dropzone = event.target;
+	if (dropzone.class === "player-tiles") {
+		dropzone.setAttribute('class','tdfull');
+		dropzone.innerText = '';
+	}
+	console.log(dropzone);
 	dropzone.appendChild(draggableElement);
-	event.dataTransfer.clearData();
+	// event.dataTransfer.clearData();
 }
 
 
 /// push my shuffled tiles into the dom
 
 for (let i=0; i<7; i++) {
-	document.getElementById(`tile${i+1}`).innerHTML = `${player.hand[i].letter}<sub>${player.hand[i].points}</sub>`;
+	document.getElementById(`tile${i+1}`).innerHTML = `<p>${player.hand[i].letter}</p><sub>${player.hand[i].points}</sub>`;
 }
 
