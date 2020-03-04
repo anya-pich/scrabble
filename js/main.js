@@ -127,13 +127,7 @@ console.log(computer);
 // draggable tiles
 
 function onDragStart(event) {
-	event
-		.dataTransfer
-		.setData('text/plain', event.target.id);
-	event
-		.currentTarget
-		.style
-		.backgroundColor = 'yellow';
+	event.dataTransfer.setData('text/plain', event.target.id);
 }
 
 function onDragOver(event) {
@@ -141,20 +135,19 @@ function onDragOver(event) {
 }
 
 function onDrop(event) {
-	const id = event
-		.dataTransfer
-		.getData('text');
+	event.preventDefault();
+	event.currentTarget.style.margin = '0px;';
+	const id = event.dataTransfer.getData('text');
 	const draggableElement = document.getElementById(id);
-	const dropzone = event.targe;
+	const dropzone = event.target;
 	dropzone.appendChild(draggableElement);
-	event
-		.dataTransfer
-		.clearData();
+	event.dataTransfer.clearData();
 }
 
 
+/// push my shuffled tiles into the dom
 
-
-
-
+for (let i=0; i<7; i++) {
+	document.getElementById(`tile${i+1}`).innerHTML = `${player.hand[i].letter}<sub>${player.hand[i].points}</sub>`;
+}
 

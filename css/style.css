@@ -75,7 +75,8 @@ button:hover {
   height: 48px;
   border-radius: 5px;
   background-color: snow;
-  box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.15);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
   font-size: 25px;
   text-align: center;
   text-transform: uppercase;
@@ -83,14 +84,16 @@ button:hover {
   color: SlateGray;
   float: left;
   margin: 4px;
-  padding: 14px;
+  padding: 13px;
 }
 
 .tile sub {
   font-size: 12px;
-  margin: 2px;
+  margin: 1px auto;
 }
 
-
+td .tile {
+  margin: 0;
+}
 
 
