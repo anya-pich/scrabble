@@ -278,48 +278,63 @@ const translateBoard = () => {
 	// console.log(boardNew);
 }
 
-let wordsNew = [];
-let wordsNewFiltered = [];
+let wordsNew = {};
 
 const makeWords = () => {
 	for (let x=0; x<9; x++) {
 		let accumulator = "";
 		for (let y=0; y<9; y++) {
-			if (!!boardNew[x][y]===true) {
-				accumulator += boardNew[x][y].letter;
+			let cell = boardNew[x][y];
+			if (!!cell === true) {
+				accumulator += cell.letter;
 			} else {
-				if (accumulator.length>0) {
-					wordsNew.push(accumulator);
-					accumulator = "";
+				if (accumulator.length>1) {
+					wordsNew[accumulator] = 0;
 				}
+				accumulator = "";
 			}
+		}	
+		if (accumulator.length>1) {
+			wordsNew[accumulator] = 0;
 		}
 	}
 	for (let y=0; y<9; y++) {
 		let accumulator = "";
 		for (let x=0; x<9; x++) {
-			if (!!boardNew[x][y]===true) {
-				accumulator += boardNew[x][y].letter;
+			let cell = boardNew[x][y];
+			if (!!cell === true) {
+				accumulator += cell.letter;
 			} else {
-				if (accumulator.length>0) {
-					wordsNew.push(accumulator);
-					accumulator = "";
+				if (accumulator.length>1) {
+					wordsNew[accumulator] = 0;
 				}
-			}
+				accumulator = "";
+			}	
+		}
+		if (accumulator.length>1) {
+			wordsNew[accumulator] = 0;
 		}
 	}
-	// console.log(wordsNew);
-	wordsNewFiltered = wordsNew.filter( word => word.length > 1 );
-	// console.log(wordsNewFiltered);
+	console.log(wordsNew);
 }
 
 const checkWords = (array) => {
-	for (word of array) {
+	for (word in array) {
 		if (!dictionary.includes(word)) {
 			return false;
 		}
 	}
 	return true;
+}
+
+let previousScore = 0;
+
+const getScore = () => {
+	for (let y=0; y<9; y++) {
+		for (let x=0; x<9; x++) {
+			
+		}
+	}
 }
 
 
@@ -359,7 +374,7 @@ const checkMove = () => {
 	// get words
 	translateBoard();
 	makeWords();
-	console.log(checkWords(wordsNewFiltered));
+	console.log(checkWords(wordsNew));
 
 }
 
