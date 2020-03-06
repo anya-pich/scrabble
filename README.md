@@ -3,6 +3,11 @@ Scrabble
 =========
 
 
+Wireframes:
+-----------
+<img src="other/IMG_1431.jpeg">
+<img src="other/Untitled-1.png">
+
 Gameplay:
 ---------
 Players start with 7 random tiles each out of 100 Scrabble tiles
