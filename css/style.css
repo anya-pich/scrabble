@@ -125,3 +125,7 @@ td .tile {
   background-color: ghostwhite;
 }
 
+.tdfull span {
+  display: none;
+}
+

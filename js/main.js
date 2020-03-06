@@ -60,7 +60,8 @@ class Hand {
 
 // variables
 
-let boardArray = [];
+let boardOld = [];
+let boardNew = [];
 
 // make scrabble tiles
 
@@ -135,21 +136,6 @@ for (let i=0; i<7; i++) {
 
 // drag functionality
 
-
-
-// window.addEventListener('DOMContentLoaded', () => {
-// 	// Get the element by id
-// 	const element = document.getElementById("p1");
-// 	// Add the ondragstart event listener
-// 	element.addEventListener("dragstart", dragstart_handler);
-// });
-
-
-// const element = document.getElementById('tile1');
-// element.setAttribute('draggable', 'true');
-// element.addEventListener("dragstart", dragstart_handler);
-
-
 // draggable tiles
 
 const tiles = document.querySelectorAll('.tile');
@@ -158,9 +144,33 @@ for (each of tiles) {
 	each.addEventListener('dragstart', dragstart_handler);
 };
 
+
+
+// remake special tiles
+
+const specialTiles = {
+	tw: [a1, a9, i1, i9],
+	dw: [b2, b8, h2, h8],
+	tl: [a5, c3, c7, e1, e9, g3, g7, i5],
+	dl: [b4, b6, d2, d8, f2, f8, h4, h6]
+};
+const checkSpecial = (id) => {
+	console.log(id);
+	for (const key in specialTiles) {
+		console.log(key);
+		if (specialTiles[key].includes(id)) {
+			document.getElementById(id).setAttribute('class', key);
+			document.getElementById(id).innerHTML = key;
+		}
+	}
+}
+
+// on drag start
+
 function dragstart_handler(event) {
-	event.dataTransfer.setData('text/plain', event.target.id);
+	event.dataTransfer.setData('text/plain', event.currentTarget.id);
 	event.dataTransfer.dropEffect = "move";
+	event.currentTarget.parentNode.classList.remove('tdfull');
 }
 
 // make cells droppable
@@ -169,6 +179,10 @@ for (each of cells) {
 	each.addEventListener('dragover', dragover_handler);
 	each.addEventListener('drop', drop_handler);
 };
+
+
+
+
 
 // make player tile container droppable
 document.getElementById('player-tiles').addEventListener('dragover', dragover_handler);
@@ -184,14 +198,23 @@ function drop_handler(event) {
 	event.preventDefault();
 	const id = event.dataTransfer.getData('text');
 	const draggableElement = document.getElementById(id);
-	const dropzone = event.target;
-	// if (dropzone.id !== "player-tiles") {
-	// 	// boardArray.append(new BoardTile(draggableElement.p, draggableElement.sub, dropzone.id, dropzone.class));
-	// 	dropzone.setAttribute('class','tdfull');
-	// 	dropzone.innerText = '';
-		
+	const dropzone = event.currentTarget;
 
-	// }
+	let letter = document.getElementById(id).firstChild.textContent;
+	let value = document.getElementById(id).lastChild.textContent;
+	let cell = event.currentTarget.id;
+	let multiplier = event.currentTarget.class;
+	console.log(letter);
+	console.log(value);
+	console.log(cell);
+	console.log(multiplier);
+
+	boardNew.push(new BoardTile(letter, value, cell, multiplier));
+	
+	if (dropzone.id !== "player-tiles") {
+		// boardArray.append(new BoardTile(draggableElement.p, draggableElement.sub, dropzone.id, dropzone.class));
+		dropzone.classList.add('tdfull');
+	}
 	// console.log(dropzone);
 	dropzone.appendChild(draggableElement);
 	// event.dataTransfer.clearData();
@@ -203,32 +226,31 @@ function drop_handler(event) {
 
 // tile template
 
-// const row = (coord) => parseInt(coord[0], 16)-10;
-// const column = (coord) => Number(coord[1])-1;
-// const lx = (multiplier) => {
-// 	return (multiplier === "dl") ? 2
-// 		: (multiplier === "tl") ? 3
-// 		: 1;
-// };
-// const wx = (multiplier) => {
-// 	return (multiplier === "dw") ? 2
-// 		: (multiplier === "tw") ? 3
-// 		: 1;
-// };
+const row = (coord) => "abcdefghi".indexOf(coord[0]);
+const column = (coord) => Number(coord[1])-1;
+const lx = (multiplier) => {
+	return (multiplier === "dl") ? 2
+		: (multiplier === "tl") ? 3
+		: 1;
+};
+const wx = (multiplier) => {
+	return (multiplier === "dw") ? 2
+		: (multiplier === "tw") ? 3
+		: 1;
+};
 
-// class BoardTile {
-// 	constructor(letter, value, cell, multiplier) {
-// 		this.letter = letter;
-// 		this.value = value;
-// 		this.cell = cell;
-// 		this.row = row(cell);
-// 		this.column = column(cell);
-// 		this.multiplier = multiplier;
-// 		this.lx = lx(multiplier);
-// 		this.wx = wx(multiplier)
-// 	}
-// }
-
+class BoardTile {
+	constructor(letter, value, cell, multiplier) {
+		this.letter = letter;
+		this.value = value;
+		this.cell = cell;
+		this.row = row(cell);
+		this.column = column(cell);
+		this.multiplier = multiplier;
+		this.lx = lx(multiplier);
+		this.wx = wx(multiplier)
+	}
+};
 
 
 
@@ -257,7 +279,7 @@ const checkMove = () => {
 	} else {
 		console.log("it's not empty!")
 	}
-
+	getWords();
 }
 
 document.getElementById('submitMove').addEventListener('click', checkMove);
@@ -272,22 +294,94 @@ document.getElementById('submitMove').addEventListener('click', checkMove);
 
 
 
+// const checkPlay = (arr) => {
+
+// }
+
+
+
 // check if the word is in the dictionary
 
-const checkWord = (word) => {
-	return dictionary.includes(word); 
+// const checkWord = (word) => {
+// 	return dictionary.includes(word); 
+// }
+
+
+// get words
+
+// for (let i=1; i<10; i++) {
+
+// }
+// document.getElementById(l i)
+
+
+// const getWords = () => {
+// 	// boardNew
+// 	// concatenate all the ones in row 1
+// 	boardNew
+// 	if row = 1
+
+// 	// concatenate all the ones in row 2
+// 	// concatenate all the ones in column 1
+// 	// when there's a gap start a new word
+// }
+
+let testBoard = [
+{
+	letter: "l",
+	value: 1,
+	cell: 'a2',
+	row: 0,
+	column: 1,
+	multiplier: "tw",
+	lx: 1,
+	wx: 3,
+},
+{
+	letter: "l",
+	value: 1,
+	cell: 'a2',
+	row: 0,
+	column: 2,
+	multiplier: "tw",
+	lx: 1,
+	wx: 3,
+},
+{
+	letter: "l",
+	value: 1,
+	cell: 'a2',
+	row: 0,
+	column: 3,
+	multiplier: "tw",
+	lx: 1,
+	wx: 3,
+},
+{
+	letter: "l",
+	value: 1,
+	cell: 'a2',
+	row: 0,
+	column: 4,
+	multiplier: "tw",
+	lx: 1,
+	wx: 3,
 }
+];
+
+console.log(testBoard);
+
+// const word = testBoard.reduce((word, tile) => word + tile.letter, "");
+// console.log(word);
+
+testBoard.filter(letter => letter.row === 0)
 
 
 
+/// debugging
 
-
-
-
-
-
-
-
+// dl/tl/dw/tw disappear after i place a tile on them
+// tiles append to other tiles
 
 
 
