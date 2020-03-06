@@ -29,7 +29,7 @@ h1 {
   width: 470px;
   font-weight: 100;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: DarkSlateGray;
   font-size: 10px;
   margin: 20px 0;
@@ -37,10 +37,16 @@ h1 {
 
 #player1Score {
   float: left;
+  font-weight: 400;
 }
 
 #player2Score {
   float: right;
+  font-weight: 400;
+}
+
+h2 span {
+  font-weight: 100;
 }
 
 td {
@@ -68,11 +74,6 @@ button {
   font-weight: 200;
 }
 
-button:hover {
-  background-color: WhiteSmoke;
-  color: grey;
-}
-
 #buttons {
   width: 470px;
 }
@@ -80,6 +81,13 @@ button:hover {
 #submitMove {
   float: right;
 }
+
+button:hover {
+  background-color: white;
+  color: grey;
+}
+
+
 
 #reset {
   float: left;
