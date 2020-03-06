@@ -121,6 +121,10 @@ td .tile {
   box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.2);
 }
 
+td span {
+  
+}
+
 .tdfull {
   background-color: ghostwhite;
 }

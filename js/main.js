@@ -38,6 +38,8 @@ const dictionary = ["aa", "aah", "aahed", "aahing", "aahs", "aal", "aalii", "aal
 // After the game is over see an alphabetical list of all words played with their definitions
 // After the game is over see a short list of unusual or long words that could have been played or maybe a 'hint' button while you're playing
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // classes
 
 class Tile {
@@ -60,8 +62,11 @@ class Hand {
 
 // variables
 
-let boardOld = [];
-let boardNew = [];
+let boardOld = [[],[],[],[],[],[],[],[],[]];
+let boardNew = [[],[],[],[],[],[],[],[],[]];
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // make scrabble tiles
 
@@ -133,6 +138,7 @@ for (let i=0; i<7; i++) {
 	document.getElementById(`tile${i+1}`).innerHTML = `<p>${player.hand[i].letter}</p><sub>${player.hand[i].points}</sub>`;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // drag functionality
 
@@ -143,27 +149,6 @@ for (each of tiles) {
 	each.setAttribute('draggable', 'true');
 	each.addEventListener('dragstart', dragstart_handler);
 };
-
-
-
-// remake special tiles
-
-const specialTiles = {
-	tw: [a1, a9, i1, i9],
-	dw: [b2, b8, h2, h8],
-	tl: [a5, c3, c7, e1, e9, g3, g7, i5],
-	dl: [b4, b6, d2, d8, f2, f8, h4, h6]
-};
-const checkSpecial = (id) => {
-	console.log(id);
-	for (const key in specialTiles) {
-		console.log(key);
-		if (specialTiles[key].includes(id)) {
-			document.getElementById(id).setAttribute('class', key);
-			document.getElementById(id).innerHTML = key;
-		}
-	}
-}
 
 // on drag start
 
@@ -179,9 +164,6 @@ for (each of cells) {
 	each.addEventListener('dragover', dragover_handler);
 	each.addEventListener('drop', drop_handler);
 };
-
-
-
 
 
 // make player tile container droppable
@@ -200,16 +182,16 @@ function drop_handler(event) {
 	const draggableElement = document.getElementById(id);
 	const dropzone = event.currentTarget;
 
-	let letter = document.getElementById(id).firstChild.textContent;
-	let value = document.getElementById(id).lastChild.textContent;
-	let cell = event.currentTarget.id;
-	let multiplier = event.currentTarget.class;
-	console.log(letter);
-	console.log(value);
-	console.log(cell);
-	console.log(multiplier);
+	// let letter = document.getElementById(id).firstChild.textContent;
+	// let value = document.getElementById(id).lastChild.textContent;
+	// let cell = event.currentTarget.id;
+	// let multiplier = event.currentTarget.class;
+	// console.log(letter);
+	// console.log(value);
+	// console.log(cell);
+	// console.log(multiplier);
 
-	boardNew.push(new BoardTile(letter, value, cell, multiplier));
+	// boardNew.push(new BoardTile(letter, value, cell, multiplier));
 	
 	if (dropzone.id !== "player-tiles") {
 		// boardArray.append(new BoardTile(draggableElement.p, draggableElement.sub, dropzone.id, dropzone.class));
@@ -218,13 +200,40 @@ function drop_handler(event) {
 	// console.log(dropzone);
 	dropzone.appendChild(draggableElement);
 	// event.dataTransfer.clearData();
-
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-// tile template
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// check if move is valid
+
+// first move needs to include a tile on the centre square, be more than 1 tile long and all tiles need to be adjacent
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// word checker
+
+// tile template functions
 
 const row = (coord) => "abcdefghi".indexOf(coord[0]);
 const column = (coord) => Number(coord[1])-1;
@@ -239,6 +248,8 @@ const wx = (multiplier) => {
 		: 1;
 };
 
+// tile object template
+
 class BoardTile {
 	constructor(letter, value, cell, multiplier) {
 		this.letter = letter;
@@ -252,17 +263,67 @@ class BoardTile {
 	}
 };
 
+// translate board tiles to board array
+
+const translateBoard = () => {
+	const currentLetters = document.querySelectorAll('.tdfull');
+	currentLetters.forEach( object => {
+		boardNew[row(object.id)][column(object.id)] = new BoardTile(
+			object.querySelector('p').innerText.toLowerCase(), // letter
+			object.querySelector('sub').innerText, // value
+			object.id, // cell
+			object.className.split(" ").shift().toString(), // multiplier
+		);
+	});
+	// console.log(boardNew);
+}
+
+let wordsNew = [];
+let wordsNewFiltered = [];
+
+const makeWords = () => {
+	for (let x=0; x<9; x++) {
+		let accumulator = "";
+		for (let y=0; y<9; y++) {
+			if (!!boardNew[x][y]===true) {
+				accumulator += boardNew[x][y].letter;
+			} else {
+				if (accumulator.length>0) {
+					wordsNew.push(accumulator);
+					accumulator = "";
+				}
+			}
+		}
+	}
+	for (let y=0; y<9; y++) {
+		let accumulator = "";
+		for (let x=0; x<9; x++) {
+			if (!!boardNew[x][y]===true) {
+				accumulator += boardNew[x][y].letter;
+			} else {
+				if (accumulator.length>0) {
+					wordsNew.push(accumulator);
+					accumulator = "";
+				}
+			}
+		}
+	}
+	// console.log(wordsNew);
+	wordsNewFiltered = wordsNew.filter( word => word.length > 1 );
+	// console.log(wordsNewFiltered);
+}
+
+const checkWords = (array) => {
+	for (word of array) {
+		if (!dictionary.includes(word)) {
+			return false;
+		}
+	}
+	return true;
+}
 
 
 
-
-
-
-// word checker
-
-// check if move is valid
-
-// first move needs to include a tile on the centre square, be more than 1 tile long and all tiles need to be adjacent
 
 
 const isCoordEmpty = (coordinate) => {
@@ -271,117 +332,52 @@ const isCoordEmpty = (coordinate) => {
 
 
 const checkMove = () => {
-	console.log(document.getElementById('e5').innerHtml);
-	console.log('testing check move');
+	// console.log(document.getElementById('e5').innerHtml);
+	// console.log('testing check move');
 
-	if (document.getElementById('e5').textContent==='') {
-		console.log("It's empty")
-	} else {
-		console.log("it's not empty!")
-	}
-	getWords();
+	// if (document.getElementById('e5').textContent==='') {
+	// 	console.log("It's empty")
+	// } else {
+	// 	console.log("it's not empty!")
+	// }
+	// getWords();
+
+	
+	// console.log(currentLetters);
+
+	// let x = currentLetters[0].id;
+	// console.log(x);
+	// // console.log(document.getElementById(x).className); // full classname
+
+	// console.log(currentLetters[0].id); // coordinate
+	// console.log(currentLetters[0].querySelector('p').innerText); // letter
+	// console.log(currentLetters[0].querySelector('sub').innerText); // value
+	// console.log(currentLetters[0].className); // full classname
+
+	// check if layout is valid
+
+	// get words
+	translateBoard();
+	makeWords();
+	console.log(checkWords(wordsNewFiltered));
+
 }
 
 document.getElementById('submitMove').addEventListener('click', checkMove);
 
-// all the letters played need to be in one row or column
-// all the letters played need to have no spaces between them
 
-// make strings, skip single tiles, split on space, pile into array of all words each with its score already tabulated
-// if it's already in the array then you don't get score otherwise you do
-
-
-
-
-
-// const checkPlay = (arr) => {
-
-// }
-
-
-
-// check if the word is in the dictionary
-
-// const checkWord = (word) => {
-// 	return dictionary.includes(word); 
-// }
-
-
-// get words
-
-// for (let i=1; i<10; i++) {
-
-// }
-// document.getElementById(l i)
-
-
-// const getWords = () => {
-// 	// boardNew
-// 	// concatenate all the ones in row 1
-// 	boardNew
-// 	if row = 1
-
-// 	// concatenate all the ones in row 2
-// 	// concatenate all the ones in column 1
-// 	// when there's a gap start a new word
-// }
-
-let testBoard = [
-{
-	letter: "l",
-	value: 1,
-	cell: 'a2',
-	row: 0,
-	column: 1,
-	multiplier: "tw",
-	lx: 1,
-	wx: 3,
-},
-{
-	letter: "l",
-	value: 1,
-	cell: 'a2',
-	row: 0,
-	column: 2,
-	multiplier: "tw",
-	lx: 1,
-	wx: 3,
-},
-{
-	letter: "l",
-	value: 1,
-	cell: 'a2',
-	row: 0,
-	column: 3,
-	multiplier: "tw",
-	lx: 1,
-	wx: 3,
-},
-{
-	letter: "l",
-	value: 1,
-	cell: 'a2',
-	row: 0,
-	column: 4,
-	multiplier: "tw",
-	lx: 1,
-	wx: 3,
-}
-];
-
-console.log(testBoard);
 
 // const word = testBoard.reduce((word, tile) => word + tile.letter, "");
 // console.log(word);
 
-testBoard.filter(letter => letter.row === 0)
+// testBoard.filter(letter => letter.row === 0)
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// debugging
 
-// dl/tl/dw/tw disappear after i place a tile on them
-// tiles append to other tiles
+// tiles append to full cells
+// tw tl text appears above tile when dragging tile to a different square
 
 
 
