@@ -8,6 +8,10 @@
 </head>
 <body>
 	<h1>Mini Scrabble</h1>
+	<section class="scores">
+		<h2 id="player1Score">Player 1: <span></span></h2>
+		<h2 id="player2Score">Player 2: <span></span></h2>
+	</section>
 	<table>
 		<tr>
 			<td id="a1" class="tw"><span>TW</span></td>
@@ -118,7 +122,9 @@
 		<div class="tile" id="tile6"></div>
 		<div class="tile" id="tile7"></div>
 	</section>
-	<button id="reset">Reset Game</button>
-	<button id="submitMove">Submit move</button>
+	<section id="buttons">
+		<button id="submitMove">play turn</button>
+		<button id="reset">reset game</button>
+	</section>
 </body>
 </html>

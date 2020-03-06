@@ -22,6 +22,25 @@ h1 {
   letter-spacing: 5px;
   color: DarkSlateGray;
   font-size: 25px;
+  display: none;
+}
+
+.scores {
+  width: 470px;
+  font-weight: 100;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: DarkSlateGray;
+  font-size: 10px;
+  margin: 20px 0;
+}
+
+#player1Score {
+  float: left;
+}
+
+#player2Score {
+  float: right;
 }
 
 td {
@@ -33,21 +52,37 @@ td {
   font-size: 16px;
   letter-spacing: 1px;
   font-weight: 600;
-  background-color: ghostwhite;
+  background-color: WhiteSmoke;
 }
 
 button {
-  margin-top: 30px;
-  padding: 15px;
-  background-color: grey;
+  padding: 10px;
+  width: 200px;
+  background-color: WhiteSmoke;
   color: honeydew;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 15px;
+  color: DarkSlateGray;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 200;
 }
 
 button:hover {
-  background-color: Gainsboro;
+  background-color: WhiteSmoke;
   color: grey;
+}
+
+#buttons {
+  width: 470px;
+}
+
+#submitMove {
+  float: right;
+}
+
+#reset {
+  float: left;
 }
 
 .tw {
@@ -75,7 +110,7 @@ button:hover {
   height: 56px;
   width: 468px;
   display: flex;
-  background: ghostwhite;
+  background: WhiteSmoke;
   justify-content: flex-start;
   float: left;
   border-radius: 5px;
@@ -126,7 +161,7 @@ td span {
 }
 
 .tdfull {
-  background-color: ghostwhite;
+  background-color: WhiteSmoke;
 }
 
 .tdfull span {

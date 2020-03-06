@@ -218,7 +218,18 @@ function drop_handler(event) {
 
 // first move needs to include a tile on the centre square, be more than 1 tile long and all tiles need to be adjacent
 
+let turn = 1;
 
+const checkValidity = () => {
+
+	if (turn === 1) {
+		if (!boardNew[4][4]) {
+			return "must play center tile on first turn";
+		}
+	}
+
+
+}
 
 
 
@@ -278,45 +289,50 @@ const translateBoard = () => {
 	// console.log(boardNew);
 }
 
-let wordsNew = {};
 
-const makeWords = () => {
-	for (let x=0; x<9; x++) {
-		let accumulator = "";
-		for (let y=0; y<9; y++) {
-			let cell = boardNew[x][y];
-			if (!!cell === true) {
-				accumulator += cell.letter;
-			} else {
-				if (accumulator.length>1) {
-					wordsNew[accumulator] = 0;
-				}
-				accumulator = "";
-			}
-		}	
-		if (accumulator.length>1) {
-			wordsNew[accumulator] = 0;
-		}
-	}
-	for (let y=0; y<9; y++) {
-		let accumulator = "";
-		for (let x=0; x<9; x++) {
-			let cell = boardNew[x][y];
-			if (!!cell === true) {
-				accumulator += cell.letter;
-			} else {
-				if (accumulator.length>1) {
-					wordsNew[accumulator] = 0;
-				}
-				accumulator = "";
-			}	
-		}
-		if (accumulator.length>1) {
-			wordsNew[accumulator] = 0;
-		}
-	}
-	console.log(wordsNew);
-}
+
+
+
+
+// let wordsNew = {};
+
+// const makeWords = () => {
+// 	for (let x=0; x<9; x++) {
+// 		let accumulator = "";
+// 		for (let y=0; y<9; y++) {
+// 			let cell = boardNew[x][y];
+// 			if (!!cell === true) {
+// 				accumulator += cell.letter;
+// 			} else {
+// 				if (accumulator.length>1) {
+// 					wordsNew[accumulator] = 0;
+// 				}
+// 				accumulator = "";
+// 			}
+// 		}	
+// 		if (accumulator.length>1) {
+// 			wordsNew[accumulator] = 0;
+// 		}
+// 	}
+// 	for (let y=0; y<9; y++) {
+// 		let accumulator = "";
+// 		for (let x=0; x<9; x++) {
+// 			let cell = boardNew[x][y];
+// 			if (!!cell === true) {
+// 				accumulator += cell.letter;
+// 			} else {
+// 				if (accumulator.length>1) {
+// 					wordsNew[accumulator] = 0;
+// 				}
+// 				accumulator = "";
+// 			}	
+// 		}
+// 		if (accumulator.length>1) {
+// 			wordsNew[accumulator] = 0;
+// 		}
+// 	}
+// 	console.log(wordsNew);
+// }
 
 const checkWords = (array) => {
 	for (word in array) {
@@ -327,15 +343,15 @@ const checkWords = (array) => {
 	return true;
 }
 
-let previousScore = 0;
+// let previousScore = 0;
 
-const getScore = () => {
-	for (let y=0; y<9; y++) {
-		for (let x=0; x<9; x++) {
-			
-		}
-	}
-}
+// const getScore = () => {
+// 	for (let y=0; y<9; y++) {
+// 		for (let x=0; x<9; x++) {
+
+// 		}
+// 	}
+// }
 
 
 
@@ -373,9 +389,9 @@ const checkMove = () => {
 
 	// get words
 	translateBoard();
-	makeWords();
-	console.log(checkWords(wordsNew));
-
+	// makeWords();
+	// console.log(checkWords(wordsNew));
+	console.log(checkValidity());
 }
 
 document.getElementById('submitMove').addEventListener('click', checkMove);
